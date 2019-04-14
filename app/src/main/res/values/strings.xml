@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">微信</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="tel_login">手机号登录</string>
+    <string name="country">国家/地区</string>
+    <string name="phone">手机号</string>
+    <string name="input_hint_phone">请填写手机号</string>
+    <string name="other_login">用微信号/QQ号/邮箱登录</string>
+    <string name="login_next">下一步</string>
+    <string name="wx">微信</string>
+    <string name="contact">通讯录</string>
+    <string name="discover">发现</string>
+    <string name="me">我</string>
+    <string name="play">支付</string>
+    <string name="collect">收藏</string>
+    <string name="album">相册</string>
+    <string name="card_pag">卡包</string>
+    <string name="expression">表情</string>
+    <string name="set">设置</string>
+    <string name="me_home_pager">主页</string>
+    <string name="number">公众号</string>
+    <string name="label">标签</string>
+    <string name="group_chat">群聊</string>
+    <string name="new_friend">新的好友</string>
+</resources>
