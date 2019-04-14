@@ -23,4 +23,6 @@
     <string name="label">标签</string>
     <string name="group_chat">群聊</string>
     <string name="new_friend">新的好友</string>
+    <string name="friend_cir">朋友圈</string>
+    <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 </resources>

@@ -133,6 +133,7 @@ class ContactFragment: BaseFragment<ContactContract.IView, ContactPresenter>(), 
                 }
             }
             headerAdapter?.notifyDataSetChanged()
+            upper.clear()
         }
     }
 }
