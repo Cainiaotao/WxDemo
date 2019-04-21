@@ -15,7 +15,9 @@ import com.tantao.wxdemo.ui.fragment.DiscoverFragment
 import com.tantao.wxdemo.ui.fragment.MeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainContract.IView,MainPresenter>(),MainContract.IView{
+class MainActivity : BaseActivity<MainContract.IView,MainPresenter>(),
+    MainContract.IView,
+    MeFragment.OnFragmentInteractionListener{
 
     private var chatFragment:ChatFragment?=null
     private var contactFragment:ContactFragment?=null
@@ -157,5 +159,9 @@ class MainActivity : BaseActivity<MainContract.IView,MainPresenter>(),MainContra
                 tv_me.setTextColor(ContextCompat.getColor(this,R.color.color_00ff00))
             }
         }
+    }
+
+    override fun obtainFragment() {
+       //
     }
 }

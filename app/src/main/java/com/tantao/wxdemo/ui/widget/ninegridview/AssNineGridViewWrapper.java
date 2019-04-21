@@ -1,17 +1,16 @@
 package com.tantao.wxdemo.ui.widget.ninegridview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
+import android.graphics.*;
 import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import com.tantao.wxdemo.R;
 
 /**
  * @author assionhonty
@@ -34,6 +33,25 @@ public class AssNineGridViewWrapper extends AppCompatImageView {
     /***要绘制的文字*/
     private String msg = "";
 
+    private Bitmap loadView;
+
+    //定义画笔
+    private Paint paint;
+    //倒计时的时间
+    private int countDownTimeTotal = 1500;//总的倒计时默认是1.5秒
+    //view默认的长度和高度
+    private int defaultWidth = 200;
+    private int defaultHeight = 300;
+    //内外层圆弧的颜色，默认都为黑色
+    private int outsideArcColor = Color.BLACK;
+    private CountDownTimer countDownTimer;
+    private float defaultStartAngle = 105;
+    //计算改变之后的起始角度
+    private float startAngle = defaultStartAngle;
+    private float outsideArcWidth = 15f;
+    private float outsideArcAngle = 330f;
+
+
     public AssNineGridViewWrapper(Context context) {
         this(context, null);
     }
@@ -45,6 +63,7 @@ public class AssNineGridViewWrapper extends AppCompatImageView {
     public AssNineGridViewWrapper(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        loadView = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_tag);
         //转化单位
         textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSize, getContext().getResources().getDisplayMetrics());
 
@@ -57,6 +76,8 @@ public class AssNineGridViewWrapper extends AppCompatImageView {
         textPaint.setTextSize(textSize);
         //设置文字颜色
         textPaint.setColor(textColor);
+
+        initAnim();
     }
 
     @Override
@@ -67,6 +88,20 @@ public class AssNineGridViewWrapper extends AppCompatImageView {
             float baseY = getHeight() / 2 - (textPaint.ascent() + textPaint.descent()) / 2;
             canvas.drawText(msg, getWidth() / 2, baseY, textPaint);
         }
+
+        int width = loadView.getWidth();
+        int hight = loadView.getHeight();
+        Paint photoPaint = new Paint();
+        // 获取更清晰的图像采样，防抖动
+        photoPaint.setDither(true);
+        // 过滤一下，抗剧齿
+        photoPaint.setFilterBitmap(true);
+        Rect src = new Rect(0, 0, loadView.getWidth(), loadView.getHeight());// 创建一个指定的新矩形的坐标
+        Rect dst = new Rect(0, 0, width, hight);// 创建一个指定的新矩形的坐标
+        canvas.drawBitmap(loadView, src, dst, photoPaint);
+
+        ////////////////////////
+        initViewCitr(canvas);
     }
 
     @Override
@@ -138,6 +173,59 @@ public class AssNineGridViewWrapper extends AppCompatImageView {
         this.textColor = textColor;
         textPaint.setColor(textColor);
         invalidate();
+    }
+
+    private void initViewCitr(Canvas canvas){
+        paint = new Paint();
+        //首先绘制最外层的圆
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(outsideArcWidth);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setColor(outsideArcColor);
+        Path path = new Path();
+        path.addArc(10, 10, defaultWidth - 10, defaultHeight - 10, startAngle, outsideArcAngle);
+        canvas.drawPath(path, paint);
+    }
+
+    private void initAnim(){
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer.onFinish();
+            countDownTimer = null;
+        }
+        countDownTimer = new CountDownTimer(countDownTimeTotal, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //计算当前剩余时间的比例
+                float radio = (float) millisUntilFinished / (float) countDownTimeTotal;
+
+                float addAngle = 360 - 360 * radio;
+                //根据比较改变开始位置的角度
+                startAngle = defaultStartAngle;
+                startAngle = defaultStartAngle + addAngle;
+
+                invalidate();
+            }
+
+            @Override
+            public void onFinish() {
+                if(countDownTimer != null){
+                    countDownTimer.start();
+                }
+            }
+        };
+
+        countDownTimer.start();
+    }
+
+    public void setFinish(){
+        if(countDownTimer != null){
+            countDownTimer.onFinish();
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.tantao.wxdemo.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,11 @@ import com.tantao.wxdemo.ui.activity.me.MyInfoActivity
 import com.tantao.wxdemo.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_me.*
 
+
+
+
+
+
 /**
  * <p>文件描述：Mey 页面<p>
  * <p>作者：tantao<p>
@@ -18,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_me.*
  */
 class MeFragment:BaseFragment<MeContract.IView,MePresenter>()
         ,MeContract.IView, View.OnClickListener {
+
+    private var mListener: OnFragmentInteractionListener? = null
 
 
     override fun createPresenter(): MePresenter  = MePresenter(this)
@@ -53,6 +61,17 @@ class MeFragment:BaseFragment<MeContract.IView,MePresenter>()
             R.id.item_homePage->jumpToActivity(Intent(activity!!,MyInfoActivity::class.java))
             R.id.item_set->{}
         }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            mListener = context
+        }
+    }
+
+    interface OnFragmentInteractionListener{
+        fun obtainFragment()
     }
 
 }

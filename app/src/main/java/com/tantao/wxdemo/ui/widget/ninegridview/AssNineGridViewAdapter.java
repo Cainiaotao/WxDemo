@@ -3,6 +3,7 @@ package com.tantao.wxdemo.ui.widget.ninegridview;
 import android.content.Context;
 import android.widget.ImageView;
 import com.tantao.wxdemo.R;
+import com.tantao.wxdemo.ui.widget.ProgressImageView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -41,8 +42,12 @@ public class AssNineGridViewAdapter implements Serializable {
      * @param context 上下文
      * @return 生成的 ImageView
      */
-    public ImageView generateImageView(Context context) {
-        AssNineGridViewWrapper imageView = new AssNineGridViewWrapper(context);
+    public ProgressImageView generateImageView(Context context) {
+//        AssNineGridViewWrapper imageView = new AssNineGridViewWrapper(context);
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setImageResource(R.drawable.ic_default_color);
+
+        ProgressImageView imageView =new  ProgressImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(R.drawable.ic_default_color);
         return imageView;

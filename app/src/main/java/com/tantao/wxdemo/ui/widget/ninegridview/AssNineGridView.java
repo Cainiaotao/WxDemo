@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.tantao.wxdemo.R;
+import com.tantao.wxdemo.ui.widget.ProgressImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class AssNineGridView extends ViewGroup {
 
     private int gridHeight;
 
-    private List<ImageView> imageViews;
+    private List<ProgressImageView> imageViews;
     private List<String> mImageInfo;
 
     private AssNineGridViewAdapter mAdapter;
@@ -104,7 +105,7 @@ public class AssNineGridView extends ViewGroup {
         }
         int childrenCount = mImageInfo.size();
         for (int i = 0; i < childrenCount; i++) {
-            ImageView childrenView = (ImageView) getChildAt(i);
+            ProgressImageView childrenView = (ProgressImageView) getChildAt(i);
 
             int rowNum = i / columnCount;
             int columnNum = i % columnCount;
@@ -153,7 +154,7 @@ public class AssNineGridView extends ViewGroup {
         //保证View的复用，避免重复创建
         if (mImageInfo == null) {
             for (int i = 0; i < imageCount; i++) {
-                ImageView iv = getImageView(i);
+                ProgressImageView iv = getImageView(i);
                 if (iv == null) {
                     return;
                 }
@@ -166,7 +167,7 @@ public class AssNineGridView extends ViewGroup {
                 removeViews(newViewCount, oldViewCount - newViewCount);
             } else if (oldViewCount < newViewCount) {
                 for (int i = oldViewCount; i < newViewCount; i++) {
-                    ImageView iv = getImageView(i);
+                    ProgressImageView iv = getImageView(i);
                     if (iv == null) {
                         return;
                     }
@@ -189,8 +190,8 @@ public class AssNineGridView extends ViewGroup {
     /**
      * 获得 ImageView 保证了 ImageView 的重用
      */
-    private ImageView getImageView(final int position) {
-        ImageView imageView;
+    private ProgressImageView getImageView(final int position) {
+        ProgressImageView imageView;
         if (position < imageViews.size()) {
             imageView = imageViews.get(position);
         } else {
@@ -247,7 +248,7 @@ public class AssNineGridView extends ViewGroup {
          * @param imageView 需要展示图片的ImageView
          * @param url       图片地址
          */
-        void onDisplayImage(Context context, ImageView imageView, String url);
+        void onDisplayImage(Context context, ProgressImageView imageView, String url);
 
         /**
          * @param url 图片的地址
